@@ -1,0 +1,30 @@
+{
+  "name": "redis-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "NODE_ENV=development node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kcodegit/node-redis-sample.git"
+  },
+  "author": "kohei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kcodegit/node-redis-sample/issues"
+  },
+  "homepage": "https://github.com/kcodegit/node-redis-sample#readme",
+  "dependencies": {
+    "bluebird": "^3.5.2",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.2.0",
+    "restify": "^7.2.1"
+  }
+}
