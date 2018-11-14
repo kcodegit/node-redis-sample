@@ -3,7 +3,8 @@
 var restify = require('restify'),
   Promise = require('bluebird'),
   router = require('../routes/router'),
-  p = console.log;
+  p = console.log,
+  e = console.error;
 
 /**
  * set port and uri on the server, start listening
@@ -22,5 +23,5 @@ exports.launch = () => {
   Promise.resolve(restify.createServer())
   .then(server => router.applyRoutes(server))
    .then(server => _listen(server))
-   .catch(e => p('Error while launching a server.', e))
+   .catch(e => e('Error while launching a server.', e))
 }
