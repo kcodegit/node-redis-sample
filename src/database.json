@@ -1,0 +1,10 @@
+{
+  "dev": {
+      "host": "192.168.33.10",
+      "driver": "mysql",
+      "user": "root",
+      "port": 3306,
+      "password": "password",
+      "database": "survey_db"
+  }
+}
