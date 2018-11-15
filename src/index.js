@@ -1,7 +1,7 @@
 'use strict';
 
 // imports
-var server = require('./core/server');
+var server = require('./server/server');
 
 (function(){
   server.launch()

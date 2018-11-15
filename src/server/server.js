@@ -3,6 +3,7 @@
 var restify = require('restify'),
   Promise = require('bluebird'),
   router = require('../routes/router'),
+  error_handler = require('../middleware/error'),
   p = console.log,
   e = console.error;
 
@@ -19,9 +20,10 @@ var _listen = sv => {
 }
 
 
-exports.launch = () => {
+exports.launch = _ => {
   Promise.resolve(restify.createServer())
-  .then(server => router.applyRoutes(server))
-   .then(server => _listen(server))
-   .catch(e => e('Error while launching a server.', e))
+    .then(server => router.applyRoutes(server))
+    .then(server => error_handler.apply(server))
+    .then(server => _listen(server))
+    .catch(err => e('Error while launching a server.', err))
 }
