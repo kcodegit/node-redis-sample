@@ -1,7 +1,7 @@
 'use strict';
 
-var get = require('../middleware/get'),
-  post = require('../middleware/post'),
+var get = require('../middleware/request/get'),
+  post = require('../middleware/request/post'),
   p = console.log;
 
 /**

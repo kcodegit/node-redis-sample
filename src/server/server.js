@@ -3,7 +3,7 @@
 var restify = require('restify'),
   Promise = require('bluebird'),
   router = require('../routes/router'),
-  error_handler = require('../middleware/error'),
+  error_handler = require('../middleware/request/error'),
   p = console.log,
   e = console.error;
 
