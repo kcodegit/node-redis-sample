@@ -20,19 +20,24 @@ const REDIS_CONF = {
   }
 }
 
+var main_client = getClient()
+
 // main connection
-var main_client = redis.createClient(REDIS_CONF);
-main_client.on('ready', () => p('redis is ready'));
-main_client.on('connect', () => p('redis is connected'));
-main_client.on('reconnecting', () => p('redis is reconnecting'));
-main_client.on('error', (err) => {
-  e('redis error', err);
-  main_client = redis.createClient(REDIS_CONF); // recreate the client
-});
-main_client.on('end', (err) => {
-  e('redis connection ended', err);
-  main_client = redis.createClient(REDIS_CONF); // recreate the client
-});
+function getClient(){ 
+  var client = redis.createClient(REDIS_CONF);
+  client.on('connect', () => p('redis is connected'));
+  client.on('ready', () => p('redis is ready'));
+  client.on('reconnecting', () => p('redis is reconnecting'));
+  client.on('error', (err) => {
+    e('redis error', err);
+    main_client = getClient();
+  });
+  client.on('end', (err) => {
+    e('redis connection ended', err);
+    main_client = getClient();
+  });
+  return client
+}
 
 
 
@@ -49,16 +54,6 @@ class RedisClient{
    */
   static getInstance(){
     return Promise.resolve((main_client && main_client.connected) ? new RedisClient(main_client) : null);
-  }
-
-  /**
-   * called only when the server launches
-   */
-  init(){
-    return this.hSetNX(MASTER_UPDATE_KEY, MASTER_UPDATE_FIELD, MASTER_UPDATE_VAL)
-      .then(_ => {
-        updateCount()
-      })
   }
 
   isConnected(){
@@ -123,13 +118,6 @@ class RedisClient{
         return err ? rej(err) : res(status);
       })
     })
-  }
-
-  /**
-   * update the count
-   */
-  updateCount(){
-
   }
 }
 

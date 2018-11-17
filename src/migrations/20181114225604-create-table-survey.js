@@ -25,7 +25,8 @@ exports.up = function(db, callback) {
     },
     survey_name: {
       type: 'string',
-      notNull: true
+      notNull: true,
+      unique: true
     },
     created_at: {
       type:'timestamp',
