@@ -14,8 +14,19 @@ exports.survey = {
   properties: {
     survey_id:   { type: 'number', error: 'must be number' },
     survey_name: { type: 'string', error: 'must be string' },
-    start_at:      { type: 'string', error: 'must be string' },
-    end_at:        { type: 'string', error: 'must be string' }
+    created_at:      { type: 'string', error: 'must be string' },
+    updated_at:        { type: 'string', error: 'must be string' }
+  }
+}
+
+exports.post_submission = {
+  type: 'object',
+  strict: true,
+  properties: {
+    survey_id:   { type: 'number', error: 'must be number' },
+    opinion: { type: 'number', eq: [0,1], error: 'must be 0 or 1' },
+    gender:      { type: 'number', eq: [0,1], error: 'must be 0 or 1' },
+    age:        { type: 'number', error: 'must be number' }
   }
 }
 
@@ -43,7 +54,8 @@ exports.inspect = function (schema, obj, tag) {
  */
 exports.inspectRequest = function (schema, obj, msg = '') {
   return new Promise((res, rej) => {
-    return inspector.validate(schema, obj).valid ? res() : rej(new errs.BadRequestError({ message: 'Invalid Body. ' + msg }));
+    var r = inspector.validate(schema, obj)
+    return r ? res() : rej(new errs.BadRequestError({ message: 'Invalid Body. ' + r.error }));
   })
 }
 

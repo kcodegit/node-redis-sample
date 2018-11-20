@@ -2,7 +2,7 @@
 
 // imports
 var Survey = require('./Survey'),
-  schema = require('../../schema/schema'),
+  schema = require('../schema/schema'),
   p = console.log;
 
 exports.getInstanceFromDBResult = function(obj){

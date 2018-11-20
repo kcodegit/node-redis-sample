@@ -15,7 +15,7 @@ const DB_CONF = {
   "connectTimeout": 1000
 }
 
-var mysql = DBC(DB_CONF, 'master')
+var mysql = new DBC(DB_CONF, 'master')
 
 exports.findAll = function() {
   var query = 'SELECT survey_id, survey_name, created_at, updated_at FROM survey';
@@ -25,7 +25,7 @@ exports.findAll = function() {
 }
 
 exports.findById = function(survey_id) {                  
-  var q = 'SELECT survey_id, survey_name, created_at, updated_at FROM survey WHERE survey_id = ?';
+  var query = 'SELECT survey_id, survey_name, created_at, updated_at FROM survey WHERE survey_id = ?';
   var params = [survey_id];
   return mysql.execute(query, params)
     .then(results => results.map(r => SurveyFactory.getInstanceFromDBResult(r)))
@@ -33,7 +33,14 @@ exports.findById = function(survey_id) {
 }
 
 exports.findAllSortedByUpdatedAt = function(){
-  var q = 'SELECT survey_id, survey_name, created_at, updated_at FROM survey ORDER BY updated_at LIMIT 1';
+  var q = 'SELECT survey_id, survey_name, created_at, updated_at FROM survey ORDER BY updated_at';
+  return mysql.query(query)
+    .then(results => results.map(r => SurveyFactory.getInstanceFromDBResult(r)))
+    .catch(e => Promise.reject(e));
+}
+
+exports.lastUpdatedAt = function(){
+  var q = 'SELECT updated_at FROM survey ORDER BY updated_at LIMIT 1';
   return mysql.query(query)
     .then(results => results.map(r => SurveyFactory.getInstanceFromDBResult(r)))
     .catch(e => Promise.reject(e));

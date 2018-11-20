@@ -1,6 +1,7 @@
 'use strict';
 
-var p = console.log;
+var p = console.log,
+  SubmissionRepository = require('./SubmissionRepository');
 
 class Submission {
   constructor(id, survey_id, opinion, gender, age){
@@ -10,16 +11,10 @@ class Submission {
     this.gender = gender;
     this.age = age;
   }
+
+  submit(){
+    return SubmissionRepository.add(this.survey_id, this.opinion, this.gender, this.age)
+  }
 }
-
-const Opinion = Object.freeze({
-  AGREE: 0,
-  DISAGREE: 1
-});
-
-const Gender = Object.freeze({
-  MALE: 0,
-  FEMALE: 1
-});
 
 module.exports = Submission
