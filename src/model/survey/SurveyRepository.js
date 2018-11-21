@@ -31,17 +31,3 @@ exports.findById = function(survey_id) {
     .then(results => results.map(r => SurveyFactory.getInstanceFromDBResult(r)))
     .catch(e => Promise.reject(e));
 }
-
-exports.findAllSortedByUpdatedAt = function(){
-  var q = 'SELECT survey_id, survey_name, created_at, updated_at FROM survey ORDER BY updated_at';
-  return mysql.query(query)
-    .then(results => results.map(r => SurveyFactory.getInstanceFromDBResult(r)))
-    .catch(e => Promise.reject(e));
-}
-
-exports.lastUpdatedAt = function(){
-  var q = 'SELECT updated_at FROM survey ORDER BY updated_at LIMIT 1';
-  return mysql.query(query)
-    .then(results => results.map(r => SurveyFactory.getInstanceFromDBResult(r)))
-    .catch(e => Promise.reject(e));
-}
